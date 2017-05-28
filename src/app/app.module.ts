@@ -8,10 +8,18 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
-/*
+import { AuthComponent } from './auth/auth.component';
+
+
 const appRoutes: Routes=[
-  {path:''}
-]*/
+  {path:'', redirectTo: 'auth/login', pathMatch: 'full'},
+
+  { path:'auth', component: AuthComponent, children:[
+    { path: 'login', component: LoginComponent},
+    { path: 'signup', component: SignupComponent},
+    {path:'', redirectTo:'auth/login', pathMatch:'full'}
+  ]}
+]
 
 
 
@@ -20,15 +28,16 @@ const appRoutes: Routes=[
   declarations: [
     AppComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     FormsModule,
-    ReactiveFormsModule
-    //RouterModule.forRoot(appRoutes),
+    ReactiveFormsModule,
+    RouterModule.forRoot(appRoutes),
 
   ],
   providers: [],

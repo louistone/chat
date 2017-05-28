@@ -27,6 +27,6 @@ export class LoginComponent implements OnInit {
 
   //return if a field is valid
   fieldInvalid(fieldName){
-    return this.loginForm.controls[fieldName].valid && this.loginForm.controls[fieldName].touched;
+    return this.loginForm.controls[fieldName].invalid && this.loginForm.controls[fieldName].touched;
   }
 }
