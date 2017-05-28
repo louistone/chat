@@ -1,0 +1,33 @@
+<div class="box">
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="field">
+      <p class="control">
+        <input 
+        type="text" 
+        class="input"
+        placeholder="email"
+        [ngClass]= "fieldInvalid('email') ? 'is-success' : 'is-danger'"
+        formControlName="email"
+        />
+      </p>
+    </div>
+    <div class="field">
+      <p class="control">
+        <input 
+        type="password" 
+        class="input"
+        placeholder="password"
+        [ngClass]= "fieldInvalid('password') ? 'is-success' : 'is-danger'"
+        formControlName="password"
+        />
+      </p>
+    </div>  
+    <div class="field">
+      <p class="control">
+        <button class="button is-primary" type="submit">Login</button>
+        <a class="button is-white">Signup</a>
+      </p>
+    </div>
+  </form>
+</div>
