@@ -1,0 +1,17 @@
+<div class="box">
+    <div class ="headerContainer">
+    <h4 class="userLabel">{{username}}</h4>
+    <div [ngClass]="{'green':userStatus=='active'}" class="circle" ></div>
+    </div>
+
+    <h5>Status: <i><span class="userSpan">{{userStatus}}</span></i></h5>
+    <div class="buttons">
+    <!--
+    <button (click)="checkTodo(); isChecked='true'" [disabled]="isChecked || userStatus == 'completed'" id="btnCheck" class="btn btn-default">CHECK</button>
+    <button (click)="deleteTodo()" class="btn btn-default">DELETE</button>
+    -->
+    <button [disabled]="userStatus == 'offline'"  id="btnChat" class="button is-primary" (click)="goChat(username)">CHAT</button>
+    <button class="button">REMOVE</button>
+    
+    </div>
+</div>

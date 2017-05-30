@@ -9,6 +9,9 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { AuthComponent } from './auth/auth.component';
+import { HomeComponent } from './home/home.component';
+import { UserBoxComponent } from './home/user-box/user-box.component';
+import { ChatRoomComponent } from './chat-room/chat-room.component';
 
 
 const appRoutes: Routes=[
@@ -29,7 +32,10 @@ const appRoutes: Routes=[
     AppComponent,
     LoginComponent,
     SignupComponent,
-    AuthComponent
+    AuthComponent,
+    HomeComponent,
+    UserBoxComponent,
+    ChatRoomComponent
   ],
   imports: [
     BrowserModule,

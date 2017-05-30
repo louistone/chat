@@ -22,6 +22,9 @@ export class SignupComponent implements OnInit {
     })
 
   }
+  onSubmit(){
+    console.log(this.signupForm.value);
+  }
 
     //return if a field is valid
   fieldInvalid(fieldName){

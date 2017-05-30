@@ -1,0 +1,55 @@
+.userBox{
+    display: flex;
+    flex-direction: column;
+    border-top: 1px black solid;
+    
+    //width: 250px;
+    height: 125px;
+}
+
+h4, h5{
+    margin-left:10px;
+}
+
+.circle{
+    background-color:#C62828;
+    border-radius: 50%;
+    height:20px;
+    width:20px;
+    opacity:0;
+    transition-duration: 1s;
+    margin-left: auto;
+    margin-top:10px;
+    margin-right: 10px;
+}
+.userBox:hover{
+    .circle{
+        opacity: 1;
+    }
+}
+
+.green{
+    background-color:green;   
+}
+.headerContainer{
+    display:flex;
+    flex-direction: row;
+}
+
+h5{
+    color: #BDBDBD;
+
+}
+
+.button{
+    transition-duration: 1s;
+}
+#btnChat:hover{
+    background-color: #C62828;
+}
+.buttons{
+    align-self: flex-end;
+    margin-top: auto;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
