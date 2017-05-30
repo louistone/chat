@@ -27,7 +27,8 @@
 // }
 
 .container{
-    margin-top:30px;
+    margin-top:5vh;
+    margin-bottom:5vh;
 }
 .text-box{
     display:flex;
@@ -66,8 +67,11 @@
 .exit-link{
     margin-left: auto;
     color: darkgray;
+    transition: 1s;
     
-    
+}
+.exit-link:hover{
+    color: lightcoral;
 }
 // .usernameTxt{
 //     text-align:center;
