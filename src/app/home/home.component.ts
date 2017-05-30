@@ -6,7 +6,7 @@ import { UserBoxComponent } from './user-box/user-box.component';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  users = [{"username":"Tudor", "status":"offline"},{"username":"Tudor", "status":"offline"},{"username":"Tudor", "status":"offline"},{"username":"Tudor", "status":"offline"}];
+  users = [{"username":"Tudor", "status":"active"},{"username":"Tudor", "status":"offline"},{"username":"Tudor", "status":"offline"},{"username":"Tudor", "status":"offline"}];
   constructor() { }
 
   ngOnInit() {

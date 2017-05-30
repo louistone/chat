@@ -32,7 +32,7 @@
 .text-box{
     display:flex;
     flex-direction: column;
-
+    overflow: auto;
 }
 .income{
     margin-top:10px;
@@ -59,10 +59,9 @@
     margin-top: auto;
     padding-top: 10px;
 }
-.text-box{
-    overflow: auto;
+.title{
+    margin-bottom: -10px;
 }
-
 // .usernameTxt{
 //     text-align:center;
 // }
