@@ -7,8 +7,9 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class UserBoxComponent implements OnInit {
   
-  @Input() username: String;
+  @Input() name: String;
   @Input() userStatus: String;
+  @Input() username: String;
   
   constructor() { }
 

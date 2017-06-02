@@ -25,7 +25,7 @@ const appRoutes: Routes=[
     {path:'', redirectTo:'auth/login', pathMatch:'full'}
   ]},
 
-  { path:'chat', component: ChatRoomComponent },
+  { path:'chat/:username/:name', component: ChatRoomComponent },
   { path:'home', component: HomeComponent }
 ]
 
