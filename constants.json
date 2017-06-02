@@ -1,0 +1,5 @@
+{
+    "database":{
+        "url":"mongodb://admin:123456@ds161001.mlab.com:61001/chat-application"
+    }
+}

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NGValidators } from 'ng-validators';
 
+import { UserService } from '../services/user/user.service';
 @Component({
   selector: 'signup',
   templateUrl: './signup.component.html',
@@ -11,7 +12,7 @@ import { NGValidators } from 'ng-validators';
 export class SignupComponent implements OnInit {
 
   signupForm: FormGroup;
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private userService : UserService, private router: Router) { }
 
   ngOnInit() {
     //initialize signupForm
@@ -23,7 +24,10 @@ export class SignupComponent implements OnInit {
 
   }
   onSubmit(){
-    console.log(this.signupForm.value);
+    this.userService.signup(this.signupForm.value).then(() => this.router.navigate(['/auth/login']))
+    .catch(error => {
+      alert(error);
+    })
   }
 
     //return if a field is valid

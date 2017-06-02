@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { UserBoxComponent } from './home/user-box/user-box.component';
 import { ChatRoomComponent } from './chat-room/chat-room.component';
 
+import { UserService } from './services/user/user.service';
 
 const appRoutes: Routes=[
   {path:'', redirectTo: 'auth/login', pathMatch: 'full'},
@@ -49,7 +50,7 @@ const appRoutes: Routes=[
     RouterModule.forRoot(appRoutes),
 
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
