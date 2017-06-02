@@ -14,6 +14,7 @@ import { UserBoxComponent } from './home/user-box/user-box.component';
 import { ChatRoomComponent } from './chat-room/chat-room.component';
 
 import { UserService } from './services/user/user.service';
+import { MessageService } from './services/messages/message.service'
 
 const appRoutes: Routes=[
   {path:'', redirectTo: 'auth/login', pathMatch: 'full'},
@@ -50,7 +51,7 @@ const appRoutes: Routes=[
     RouterModule.forRoot(appRoutes),
 
   ],
-  providers: [UserService],
+  providers: [UserService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

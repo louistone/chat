@@ -5,6 +5,5 @@ export module ServerEndPoints {
   export const signup = localEndPoint + '/auth/signup';
   export const io = localEndPoint + '/';
   export const addContact = localEndPoint + '/contacts/add';
-  export const getName = localEndPoint + '/contacts/name';
   export const users = localEndPoint +'/users';
 }

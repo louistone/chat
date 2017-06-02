@@ -24,6 +24,24 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 })); 
 
 
+io.on('connection', function(socket){
+    socket.on('auth', function(jData){
+        users[jData.username.replace('.','_')] = socket.id;
+        console.log(users);
+    })
+
+    socket.on('message', function(jData){
+        jNewData = {};
+        jNewData.author = jData.author;
+        jNewData.target = jData.author;
+        jNewData.message = jData.message;
+
+        addMessage(database, jData);
+        addMessage(database, jNewData);
+    })
+})
+
+
 
 app.post('/auth/signup', function(req, res){
 
@@ -90,7 +108,6 @@ function loginUser(db, jData){
         var email = jData.email;
         var password = jData.password;
         var jUser = {'email':email, 'password': password};
-        console.log(cUsers);
         cUsers.find(jUser).limit(1).toArray(function(err, docs){
             if(docs[0])
                 resolve(docs);
@@ -104,9 +121,27 @@ function getUsers(db){
     return new Promise(resolve => {
         var cUsers = db.collection('users');
         cUsers.find({}).toArray(function(err, docs){
-            console.log(docs);
             resolve(docs);
         })
     })
 
+}
+
+function addMessage(db, jData){
+        
+        cUsers = db.collection('users');
+        cUsers.find({"username":jData.target}).limit(1).toArray(function(err, docs){
+            var jUser = docs[0];
+            
+            var messages = jUser.messages;
+            if(messages[jData.author]){
+                messages[jData.author].push({"message":jData.message, "author":jData.author});
+                cUsers.update({'username':jData.target},{$set:{'messages':messages}})
+            }
+            else{
+                messages[jData.author] = {"message":jData.message, "author":jData.author};
+                cUsers.update({'username':jData.target}, {$set:{'messages':messages}});
+            }
+            
+        })
 }
