@@ -32,7 +32,7 @@ io.on('connection', function(socket){
 
     socket.on('message', function(jData){
         jNewData = {};
-        jNewData.author = jData.author;
+        jNewData.author = jData.target;
         jNewData.target = jData.author;
         jNewData.message = jData.message;
 
@@ -74,7 +74,14 @@ app.get('/users', function( req, res){
     });
 })
 
-
+app.get('/messages/:email', function(req, res){
+    var email =req.params['email'];
+    getMessages(database, email).then(user =>{
+        
+        res.json(user.messages);
+    }).catch(err => res.json({"status":"err"}))
+    
+})
 
 server.listen(8080, function(){
     console.log("SERVER IS LISTENING ON PORT 8080")
@@ -135,13 +142,30 @@ function addMessage(db, jData){
             
             var messages = jUser.messages;
             if(messages[jData.author]){
+                
                 messages[jData.author].push({"message":jData.message, "author":jData.author});
                 cUsers.update({'username':jData.target},{$set:{'messages':messages}})
             }
             else{
-                messages[jData.author] = {"message":jData.message, "author":jData.author};
+                messages[jData.author] = [{"message":jData.message, "author":jData.author}];
                 cUsers.update({'username':jData.target}, {$set:{'messages':messages}});
             }
             
         })
+}
+
+function getMessages(db, email){
+    return new Promise((resolve, reject) => {
+        
+        cUsers = db.collection('users');
+         
+        
+        cUsers.find({"email":email}).limit(1).toArray(function(err, docs){
+            if(docs[0]){
+            console.log(docs[0]);
+            resolve(docs[0])}
+            else reject("no user");
+        })
+    
+    })
 }

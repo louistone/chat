@@ -24,4 +24,13 @@ export class MessageService{
       sendMessage(jData){
           this.socket.emit('message', jData);
       }
+
+      getMessages(username){
+          return new Promise((resolve, reject) =>{
+        this.http.get(ServerEndPoints.messages+'/'+username).toPromise().then( response => {
+          
+          resolve(response.json());
+        })
+      })
+      }
 }

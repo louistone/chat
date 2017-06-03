@@ -10,7 +10,7 @@
     <button (click)="checkTodo(); isChecked='true'" [disabled]="isChecked || userStatus == 'completed'" id="btnCheck" class="btn btn-default">CHECK</button>
     <button (click)="deleteTodo()" class="btn btn-default">DELETE</button>
     -->
-    <button [disabled]="userStatus == 'offline'"  id="btnChat" class="button is-primary" (click)="goChat(username)" [routerLink]="['/chat',username,name]">CHAT</button>
+    <button [disabled]="userStatus == 'offline'"  id="btnChat" class="button is-primary" [routerLink]="['/chat',username,name]">CHAT</button>
     <button class="button">REMOVE</button>
     
     </div>

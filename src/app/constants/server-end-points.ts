@@ -6,4 +6,5 @@ export module ServerEndPoints {
   export const io = localEndPoint + '/';
   export const addContact = localEndPoint + '/contacts/add';
   export const users = localEndPoint +'/users';
+  export const messages = localEndPoint + '/messages'
 }
