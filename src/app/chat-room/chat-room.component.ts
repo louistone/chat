@@ -32,8 +32,13 @@ export class ChatRoomComponent implements OnInit {
      // })
 
       this.userService.userProfile.subscribe(user => {
-        this.messsageService.getMessages("andrei@gmail.com").then(res => console.log(res));
+        this.messsageService.getMessages(user.email).then(res => {
+          var username = this.username;
+          console.log(res);
+       });
 
+
+      
       })
     });
 

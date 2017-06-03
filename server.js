@@ -74,12 +74,13 @@ app.get('/users', function( req, res){
     });
 })
 
-app.get('/messages/:email', function(req, res){
+app.get('/messages/:email/:username', function(req, res){
     var email =req.params['email'];
-    getMessages(database, email).then(user =>{
+    var username = req.params['username'];
+    getMessages(database, email, username).then(messages =>{
         
-        res.json(user.messages);
-    }).catch(err => res.json({"status":"err"}))
+        res.json(messages);
+    }).catch(err => res.json({"status":"no messages"}))
     
 })
 
@@ -154,17 +155,18 @@ function addMessage(db, jData){
         })
 }
 
-function getMessages(db, email){
+function getMessages(db, email, username){
     return new Promise((resolve, reject) => {
         
         cUsers = db.collection('users');
          
         
         cUsers.find({"email":email}).limit(1).toArray(function(err, docs){
-            if(docs[0]){
-            console.log(docs[0]);
-            resolve(docs[0])}
-            else reject("no user");
+            
+            if(docs[0].messages[username]){
+            resolve(docs[0].messages[username]);
+            }
+            else reject("no messages");
         })
     
     })
