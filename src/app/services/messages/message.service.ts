@@ -7,7 +7,7 @@ import { ServerEndPoints } from '../../constants/server-end-points';
 @Injectable()
 export class MessageService{
       private url = ServerEndPoints.io;
-      private socket = io(this.url);
+      public socket = io(this.url);
 
       
       public activeChat = new BehaviorSubject<any>(null);
@@ -25,12 +25,21 @@ export class MessageService{
           this.socket.emit('message', jData);
       }
 
-      getMessages(username){
+      getMessages(email, username){
           return new Promise((resolve, reject) =>{
-        this.http.get(ServerEndPoints.messages+'/'+username).toPromise().then( response => {
+        this.http.get(ServerEndPoints.messages+'/'+email+'/'+username).toPromise().then( response => {
+          //this.messages.next(response.json());
           
           resolve(response.json());
+          //resolve();
         })
       })
-      }
+    }
+
+   /* messageNow(){
+        this.socket.on('message now',function(jData){    
+            console.log("message:"+jData.message+"***jData.from:"+jData.author);
+        })
+    }
+    */
 }

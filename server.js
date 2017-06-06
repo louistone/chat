@@ -35,9 +35,16 @@ io.on('connection', function(socket){
         jNewData.author = jData.target;
         jNewData.target = jData.author;
         jNewData.message = jData.message;
-
+        jNewData.realAuthor = jData.author;
+        jData.realAuthor = jData.author;
+        
+        if(users[jData.target]){
+            socket.broadcast.to(users[jData.target]).emit('message now',jData);
+        }
+        
         addMessage(database, jData);
         addMessage(database, jNewData);
+
     })
 })
 
@@ -79,7 +86,7 @@ app.get('/messages/:email/:username', function(req, res){
     var username = req.params['username'];
     getMessages(database, email, username).then(messages =>{
         
-        res.json(messages);
+        res.send(messages);
     }).catch(err => res.json({"status":"no messages"}))
     
 })
@@ -143,12 +150,11 @@ function addMessage(db, jData){
             
             var messages = jUser.messages;
             if(messages[jData.author]){
-                
-                messages[jData.author].push({"message":jData.message, "author":jData.author});
+                messages[jData.author].push({"message":jData.message, "author":jData.realAuthor});
                 cUsers.update({'username':jData.target},{$set:{'messages':messages}})
             }
             else{
-                messages[jData.author] = [{"message":jData.message, "author":jData.author}];
+                messages[jData.author] = [{"message":jData.message, "author":jData.realAuthor}];
                 cUsers.update({'username':jData.target}, {$set:{'messages':messages}});
             }
             

@@ -9,7 +9,7 @@ import { UserService } from '../services/user/user.service';
 })
 export class ChatRoomComponent implements OnInit {
 
-  author: String;
+  userProfile: String;
   username: String;
   name: String;
   sub: any;
@@ -32,21 +32,40 @@ export class ChatRoomComponent implements OnInit {
      // })
 
       this.userService.userProfile.subscribe(user => {
-        this.messsageService.getMessages(user.email).then(res => {
-          var username = this.username;
-          console.log(res);
+        this.userProfile = user.email.replace(".","_");
+        this.messsageService.getMessages(user.email, this.username).then(res => {
+        
+        this.messages = res;
+        console.log(this.messages);
+        //if messages is not an array 
+        if(this.messages.status)
+          this.messages = [];
        });
-
-
-      
       })
     });
 
     
-
+   // this.messages.messageNow();
  // })
 
+      this.messsageService.socket.on("message now",function(jData){
+        console.log(this.messages);
+        if(this.messages){
+        this.messages.push({"message":jData.message,"author":jData.author});
+        
+        }
+        else{
+          this.messages = [];
+          this.messages.push({"message":jData.message,"author":jData.author});
+        }
+      });
+  }
 
+
+  sendMessage(message){
+    console.log(this.userProfile + " " + this.username);
+    this.messsageService.sendMessage({"author":this.userProfile, "target":this.username,"message":message});
+    this.messages.push({"message":message, "author":this.userProfile});
   }
   
 }

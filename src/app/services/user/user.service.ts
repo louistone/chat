@@ -18,7 +18,7 @@ export class UserService{
     signup(data) {
     return new Promise((resolve, reject) => {
       this.http.post(ServerEndPoints.signup, data).toPromise().then(response => {
-        this.messageService.sendMessage({"author":"andrei@gmail_com","target":"andrei1@gmail_com","message":"ce faci?"});
+        this.messageService.sendMessage({"author":"nana@gmail_com","target":"ana@gmail_com","message":"ce faci?"});
         resolve();
       }).catch(() => reject("email already used"));
     });
@@ -27,9 +27,8 @@ export class UserService{
     login(data){
       return new Promise((resolve, reject) => {
         this.http.post(ServerEndPoints.login, data).toPromise().then(response =>{
-          this.messageService.auth(data.email);
-          //console.log(data.json());
           this.userProfile.next(data);
+          this.messageService.auth(data.email);
           resolve();
         }).catch(() => reject("wrong password"));
       })
@@ -38,7 +37,6 @@ export class UserService{
     getUsers(){
       return new Promise((resolve, reject) =>{
         this.http.get(ServerEndPoints.users).toPromise().then( response => {
-          this.users = new BehaviorSubject<any>(null);
           this.users.next(response.json());
           resolve();
         })
