@@ -31,7 +31,7 @@
       <div class="title">{{name}}</div>
       <hr>
       
-      <div class="text-box" #messageArea>
+      <div class="text-box" #messagearea>
       <!--
         <div class="sent">Tudor: Bine te am gasit!</div>
         <div class="income">Andrei: Am ajuns acum acasa!</div>
@@ -44,7 +44,10 @@
         <div class="sent">Tudor: Cum esti?</div>
         <div class="sent">Tudor: Ce faci?</div>
       -->
-        <div [ngClass]="message.author == userProfile ? 'sent':'income'" *ngFor="let message of messages">{{message.author}}: {{message.message}}</div>
+        <div [ngClass]="message.author == userProfile ? 'sent':'income'" *ngFor="let message of messages"><span *ngIf="message.author == userProfile">ME: </span>
+        <span *ngIf="message.author != userProfile">{{name}}: </span>
+        
+         {{message.message}}</div>
       </div>
 
       <div class="field has-addons input-box">

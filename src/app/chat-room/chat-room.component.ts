@@ -9,7 +9,7 @@ import { UserService } from '../services/user/user.service';
 })
 export class ChatRoomComponent implements OnInit {
 
-  @ViewChild('messageArea') private messageArea: ElementRef;
+  @ViewChild('messagearea') private messageArea: ElementRef;
   userProfile: String;
   username: String;
   name: String;
@@ -38,10 +38,14 @@ export class ChatRoomComponent implements OnInit {
         this.messsageService.getMessages(user.email, this.username).then(res => {
         
         this.messages = res;
+        setTimeout(()=>{
+        this.messageArea.nativeElement.scrollTop = this.messageArea.nativeElement.scrollHeight;
+
+        },25);
         //this.messageArea.nativeElement.scrollBottom(100);
         
         console.log(this.messages);
-        this.getMessageNow(this.messages);
+        this.getMessageNow(this.messages, this.messageArea);
         //if messages is not an array 
         if(this.messages.status)
           this.messages = [];
@@ -56,7 +60,7 @@ export class ChatRoomComponent implements OnInit {
      
   }
 
-  getMessageNow(message){
+  getMessageNow(message, messageArea){
       //   this.messsageService.socket.on("message now",function(jData){
       //   console.log(this.messages+"  ****   ");
       //   if(this.messages){
@@ -71,12 +75,24 @@ export class ChatRoomComponent implements OnInit {
       this.messsageService.socket.on("message now", function(jData){
           message.push({"message":jData.message, "author":jData.author});
           console.log(message);
-      })
+           setTimeout(()=>{
+          messageArea.nativeElement.scrollTop = messageArea.nativeElement.scrollHeight;
+          },25);
+    })
+      
+      
+      
  }
   sendMessage(message){
     console.log(this.userProfile + " " + this.username);
     this.messsageService.sendMessage({"author":this.userProfile, "target":this.username,"message":message});
     this.messages.push({"message":message, "author":this.userProfile});
+     setTimeout(()=>{
+        this.messageArea.nativeElement.scrollTop = this.messageArea.nativeElement.scrollHeight;
+     },25);
+  }
+  scrollBottom(){
+    this.messageArea.nativeElement.scrollTop = this.messageArea.nativeElement.scrollHeight;
   }
   
 }
