@@ -37,10 +37,12 @@ io.on('connection', function(socket){
         jNewData.message = jData.message;
         jNewData.realAuthor = jData.author;
         jData.realAuthor = jData.author;
-        
+        jData.newMessage = true;
+        jNewData.newMessage = false;
         if(users[jData.target]){
             socket.broadcast.to(users[jData.target]).emit('message now',jData);
         }
+        
         
         addMessage(database, jData);
         addMessage(database, jNewData);
@@ -88,6 +90,15 @@ app.get('/messages/:email/:username', function(req, res){
         
         res.send(messages);
     }).catch(err => res.json({"status":"no messages"}))
+    
+})
+
+app.get('/seen/:email/:username', function(req, res){
+    var email = req.params['email'];
+    var username = req.params['username'];
+    seenMessage(database, email, username).then(() => {
+        res.send("ok");
+    })
     
 })
 
@@ -149,13 +160,16 @@ function addMessage(db, jData){
             var jUser = docs[0];
             
             var messages = jUser.messages;
+            var newMessages = jUser.newMessages;
             if(messages[jData.author]){
                 messages[jData.author].push({"message":jData.message, "author":jData.realAuthor});
-                cUsers.update({'username':jData.target},{$set:{'messages':messages}})
+                newMessages.push(jData.realAuthor);
+                cUsers.update({'username':jData.target},{$set:{'messages':messages, 'newMessages':newMessages}})
             }
             else{
                 messages[jData.author] = [{"message":jData.message, "author":jData.realAuthor}];
-                cUsers.update({'username':jData.target}, {$set:{'messages':messages}});
+                newMessages.push(jData.realAuthor);
+                cUsers.update({'username':jData.target}, {$set:{'messages':messages,'newMessages':newMessages}});
             }
             
         })
@@ -176,4 +190,26 @@ function getMessages(db, email, username){
         })
     
     })
-}
+    }
+ function seenMessage(db, email,username){
+    return new Promise( resolve => {
+    cUsers = db.collection('users');
+    cUsers.find({"email":email}).limit(1).toArray(function(err, docs){    
+        var newMessages = docs[0].newMessages;
+        console.log(newMessages+ "*****"+email+" ****" +username);
+        var index = newMessages.indexOf(username);
+        while(index > -1){
+            newMessages.splice(index, 1);
+            index=newMessages.indexOf(username);
+        }
+            cUsers.update({"email":email}, {$set: {"newMessages":newMessages}});
+            resolve();
+        
+        
+        
+    })
+
+    })
+ }
+
+ 

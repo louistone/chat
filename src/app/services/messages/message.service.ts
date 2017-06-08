@@ -36,6 +36,15 @@ export class MessageService{
       })
     }
 
+    seenMessage( email, username){
+        return new Promise(resolve =>{
+        this.http.get(ServerEndPoints.seen+'/'+email+'/'+username).toPromise().then(response => {
+            resolve(response);
+        });
+
+        })
+    }
+
    /* messageNow(){
         this.socket.on('message now',function(jData){    
             console.log("message:"+jData.message+"***jData.from:"+jData.author);
