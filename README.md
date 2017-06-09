@@ -26,10 +26,7 @@ Angular-CLI
 git clone https://github.com/tudordascalu/chat.git
 
 # change into the repo directory
-cd mean-chat-app
-
-# !! edit config/database.js file !!
-# with your own data
+cd chat
 
 # install server dependencies
 npm install
